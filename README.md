@@ -9,4 +9,6 @@ What this adds:
 <br/>
 -Zoom in and out with an input or slider <br/>
 <br/>
--Enable the free camera during gameplay. (This means it gets added to the selectable cameras during gameplay like the cockpit and hood cameras)
+-Enable the free camera during gameplay. (This means it gets added to the selectable cameras during gameplay like the cockpit and hood cameras) <br/>
+<br/>
+-Offset the position all Car Cameras with a slider or input
