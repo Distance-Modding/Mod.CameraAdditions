@@ -11,12 +11,18 @@ namespace Distance.CameraAdditions.Harmony
             __instance.maxDistanceLowSpeed_ = Mod.Instance.maxDistanceLowSpeed + Mod.Instance.Config.ZoomOffset;
             __instance.maxDistanceHighSpeed_ = Mod.Instance.maxDistanceHighSpeed + Mod.Instance.Config.ZoomOffset;
             __instance.minDistance_ = Mod.Instance.minDistance + Mod.Instance.Config.ZoomOffset;
-            __instance.height_ = Mod.Instance.height + (Mod.Instance.Config.ZoomOffset / 4.5f); 
+            __instance.height_ = Mod.Instance.height + (Mod.Instance.Config.ZoomOffset / 4.5f);
 
             if (Mod.Instance.Config.LockCameraPosition)
             {
                 __instance.maxDistanceLowSpeed_ = __instance.maxDistanceHighSpeed_;
             }
+        }
+
+        [HarmonyPostfix]
+        internal static void PositionPostfix(ChaseCamMode __instance)
+        {
+            __instance.transform.position += new UnityEngine.Vector3(Mod.Instance.Config.XOffset, Mod.Instance.Config.YOffset, 0f);
         }
     }
 }

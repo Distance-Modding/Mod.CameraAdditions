@@ -27,6 +27,8 @@ namespace Distance.CameraAdditions
         public float maxDistanceHighSpeed { get; private set; }
         public float minDistance { get; private set; }
         public float height { get; private set; }
+        public float YOffset { get; private set; }
+        public float XOffset { get; private set; }
 
         public void Initialize(IManager manager)
         {
@@ -51,7 +53,7 @@ namespace Distance.CameraAdditions
             {
                 CreateSettingsMenu();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Info(e);
                 Logger.Info("This likely happened because you have the wrong version of Centrifuge.Distance. \nTo fix this, be sure to use the Centrifuge.Distance.dll file that came included with the mod's zip file. \nDespite this error, the mod will still function, however, you will not have access to the mod's menu.");
@@ -67,6 +69,10 @@ namespace Distance.CameraAdditions
         {
             MenuTree settingsMenu = new MenuTree("menu.mod.cameradd", "Camera Additions Settings")
             {
+                new ActionButton(MenuDisplayMode.Both, "setting:defaults", "RESTORE DEFAULTS")
+                .WhenClicked(() => SetDefaults())
+                .WithDescription("Restores camera values back to default"),
+
                 new IntegerSlider(MenuDisplayMode.Both, "setting:fov_offset", "FOV OFFSET")
                 .LimitedByRange(-50, 50)
                 .WithDefaultValue(0)
@@ -83,7 +89,7 @@ namespace Distance.CameraAdditions
 
                 new CheckBox(MenuDisplayMode.Both, "setting:lock_fov", "LOCK FOV")
                 .WithGetter(() => Config.LockFOV)
-                .WithSetter(((x) => Config.LockFOV = x))
+                .WithSetter((x) => Config.LockFOV = x)
                 .WithDescription("Lock the FOV of Chase Cam mode"),
 
                 new FloatSlider(MenuDisplayMode.Both, "setting:zoom_offset", "ZOOM OFFSET")
@@ -92,6 +98,20 @@ namespace Distance.CameraAdditions
                 .WithGetter(() => Config.ZoomOffset)
                 .WithSetter(((x) => Config.ZoomOffset = x))
                 .WithDescription("Adjust zoom offset of the Chase Cam mode"),
+
+                new FloatSlider(MenuDisplayMode.Both, "setting:x_offset", "X OFFSET")
+                .LimitedByRange(-20f, 20f)
+                .WithDefaultValue(0f)
+                .WithGetter(() => Config.XOffset)
+                .WithSetter((x) => Config.XOffset = x)
+                .WithDescription("Adjust the X axis offset of all Car Camera Modes"),
+
+                new FloatSlider(MenuDisplayMode.Both, "setting:y_offset", "Y OFFSET")
+                .LimitedByRange(-20f, 20f)
+                .WithDefaultValue(0f)
+                .WithGetter(() => Config.YOffset)
+                .WithSetter((x) => Config.YOffset = x)
+                .WithDescription("Adjust the Y axis offset of all Car Camera Modes"),
 
                 new CheckBox(MenuDisplayMode.Both, "setting:lock_camera", "LOCK CAMERA POSITION")
                 .WithGetter(() => Config.LockCameraPosition)
@@ -102,6 +122,12 @@ namespace Distance.CameraAdditions
                 .WithGetter(() => Config.EnableFreeCam)
                 .WithSetter(((x) => Config.EnableFreeCam = x))
                 .WithDescription("Make Free Cam an available camera while playing (Will not apply until outside gameplay)"),
+
+                new InputPrompt(MenuDisplayMode.Both, "setting:set_defaults_hotkey", "SET DEFAULTS HOTKEY")
+                .WithDefaultValue(() => Config.DefaultsHotkey)
+                .WithSubmitAction((x) => Config.DefaultsHotkey = x)
+                .WithTitle("DEFAULTS HOTKEY")
+                .WithDescription("Set the hotkey for restoring default camera values"),
 
                 new InputPrompt(MenuDisplayMode.Both, "setting:increase_fov_hotkey", "SET INCREASE FOV HOTKEY")
                 .WithDefaultValue(() => Config.IncreaseFOVHotkey)
@@ -125,7 +151,31 @@ namespace Distance.CameraAdditions
                 .WithDefaultValue(() => Config.ZoomOutHotkey)
                 .WithSubmitAction((x) => Config.ZoomOutHotkey = x)
                 .WithTitle("ZOOM OUT FOV HOTKEY")
-                .WithDescription("Set the hotkey for zooming out")
+                .WithDescription("Set the hotkey for zooming out"),
+
+                new InputPrompt(MenuDisplayMode.Both, "setting:increase_x_hotkey", "SET INCREASE X HOTKEY")
+                .WithDefaultValue(() => Config.IncreaseXOffsetHotkey)
+                .WithSubmitAction((x) => Config.IncreaseXOffsetHotkey = x)
+                .WithTitle("INCREASE X OFFSET HOTKEY")
+                .WithDescription("Set the hotkey for increasing the X offset"),
+
+                new InputPrompt(MenuDisplayMode.Both, "setting:decrease_x_hotkey", "SET DECREASE X HOTKEY")
+                .WithDefaultValue(() => Config.DecreaseXOffsetHotkey)
+                .WithSubmitAction((x) => Config.DecreaseXOffsetHotkey = x)
+                .WithTitle("DECREASE X OFFSET HOTKEY")
+                .WithDescription("Set the hotkey for decreasing the X offset"),
+
+                new InputPrompt(MenuDisplayMode.Both, "setting:increase_y_hotkey", "SET INCREASE Y HOTKEY")
+                .WithDefaultValue(() => Config.IncreaseYOffsetHotkey)
+                .WithSubmitAction((x) => Config.IncreaseYOffsetHotkey = x)
+                .WithTitle("INCREASE Y OFFSET HOTKEY")
+                .WithDescription("Set the hotkey for increasing the Y offset"),
+
+                new InputPrompt(MenuDisplayMode.Both, "setting:decrease_y_hotkey", "SET DECREASE Y HOTKEY")
+                .WithDefaultValue(() => Config.DecreaseYOffsetHotkey)
+                .WithSubmitAction((x) => Config.DecreaseYOffsetHotkey = x)
+                .WithTitle("DECREASE Y OFFSET HOTKEY")
+                .WithDescription("Set the hotkey for decreasing the Y offset"),
             };
 
             Menus.AddNew(MenuDisplayMode.Both, settingsMenu, "CAMERA ADDITIONS", "Settings for the camera additions mod.");
@@ -136,6 +186,11 @@ namespace Distance.CameraAdditions
         private Hotkey _keybindDecreaseFOVOffset = null;
         private Hotkey _keybindZoomIn = null;
         private Hotkey _keybindZoomOut = null;
+        private Hotkey _keybindDefaults = null;
+        private Hotkey _keybindIncreaseXOffset = null;
+        private Hotkey _keybindDecreaseXOffset = null;
+        private Hotkey _keybindIncreaseYOffset = null;
+        private Hotkey _keybindDecreaseYOffset = null;
 
         public void OnConfigChanged(ConfigLogic config)
         {
@@ -161,6 +216,31 @@ namespace Distance.CameraAdditions
                 {
                     Config.ZoomOffset -= 0.5f;
                 }
+            });
+
+            BindAction(ref _keybindDefaults, config.DefaultsHotkey, () =>
+            {
+                SetDefaults();
+            });
+
+            BindAction(ref _keybindIncreaseXOffset, config.IncreaseXOffsetHotkey, () =>
+            {
+                Config.XOffset += 0.5f;
+            });
+
+            BindAction(ref _keybindDecreaseXOffset, config.DecreaseXOffsetHotkey, () =>
+            {
+                Config.XOffset -= 0.5f;
+            });
+
+            BindAction(ref _keybindIncreaseYOffset, config.IncreaseYOffsetHotkey, () =>
+            {
+                Config.YOffset += 0.5f;
+            });
+
+            BindAction(ref _keybindIncreaseYOffset, config.IncreaseYOffsetHotkey, () =>
+            {
+                Config.YOffset -= 0.5f;
             });
         }
 
@@ -194,6 +274,15 @@ namespace Distance.CameraAdditions
                 minDistance = 4f;
                 height = 1.55f;
             }
+        }
+
+        //Set camera values back to default
+        private void SetDefaults()
+        {
+            Config.FOVOffset = 0;
+            Config.ZoomOffset = 0f;
+            Config.XOffset = 0f;
+            Config.YOffset = 0f;
         }
     }
 }
