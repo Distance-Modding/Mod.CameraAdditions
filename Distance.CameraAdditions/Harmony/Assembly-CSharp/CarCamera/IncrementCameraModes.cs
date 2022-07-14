@@ -3,7 +3,7 @@
 namespace Distance.CameraAdditions.Harmony
 {
     [HarmonyPatch(typeof(CarCamera), "IncrementCameraModes")]
-    internal class CarCamera__IncrementCameraModes
+    internal static class CarCamera__IncrementCameraModes
     {
         [HarmonyPostfix]
         internal static void SetChaseCamValues(CarCamera __instance)

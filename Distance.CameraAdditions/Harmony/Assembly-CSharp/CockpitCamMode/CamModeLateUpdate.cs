@@ -3,7 +3,7 @@
 namespace Distance.CameraAdditions.Harmony
 {
     [HarmonyPatch(typeof(CockpitCamMode), "CamModeLateUpdate")]
-    internal class CockpitCamMode__CamModeLateUpdate
+    internal static class CockpitCamMode__CamModeLateUpdate
     {
         [HarmonyPostfix]
         internal static void PositionPostfix(CockpitCamMode __instance)

@@ -3,7 +3,7 @@
 namespace Distance.CameraAdditions.Harmony
 {
     [HarmonyPatch(typeof(ChaseCamMode), "CamModeLateUpdate")]
-    internal class ChaseCamMode__CamModeLateUpdate
+    internal static class ChaseCamMode__CamModeLateUpdate
     {
         [HarmonyPrefix]
         internal static void PositionPrefix(ChaseCamMode __instance)
@@ -15,10 +15,10 @@ namespace Distance.CameraAdditions.Harmony
             else
                 zoomOffset = Mod.Instance.Config.ZoomOffset;
 
-            __instance.maxDistanceLowSpeed_ = Mod.Instance.maxDistanceLowSpeed + zoomOffset;
-            __instance.maxDistanceHighSpeed_ = Mod.Instance.maxDistanceHighSpeed + zoomOffset;
-            __instance.minDistance_ = Mod.Instance.minDistance + zoomOffset;
-            __instance.height_ = Mod.Instance.height + (zoomOffset / 4.5f);
+            __instance.maxDistanceLowSpeed_ = Mod.Instance.MaxDistanceLowSpeed + zoomOffset;
+            __instance.maxDistanceHighSpeed_ = Mod.Instance.MaxDistanceHighSpeed + zoomOffset;
+            __instance.minDistance_ = Mod.Instance.MinDistance + zoomOffset;
+            __instance.height_ = Mod.Instance.Height + (zoomOffset / 4.5f);
 
             if (Mod.Instance.Config.LockCameraPosition)
             {
