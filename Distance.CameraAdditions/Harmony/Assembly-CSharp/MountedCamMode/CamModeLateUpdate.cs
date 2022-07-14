@@ -8,7 +8,9 @@ namespace Distance.CameraAdditions.Harmony
         [HarmonyPostfix]
         internal static void PositionPostfix(MountedCamMode __instance)
         {
-            __instance.transform.position += new UnityEngine.Vector3(Mod.Instance.Config.XOffset, Mod.Instance.Config.YOffset, 0f);
+            __instance.transform.position += __instance.transform.right * (Mod.Instance.Config.XOffset/10);
+            __instance.transform.position += __instance.transform.up * (Mod.Instance.Config.YOffset/10);
+            __instance.transform.position += __instance.transform.forward * (Mod.Instance.Config.ZoomOffset/10);
         }
     }
 }

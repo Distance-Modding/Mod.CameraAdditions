@@ -97,7 +97,7 @@ namespace Distance.CameraAdditions
                 .WithDefaultValue(0f)
                 .WithGetter(() => Config.ZoomOffset)
                 .WithSetter(((x) => Config.ZoomOffset = x))
-                .WithDescription("Adjust zoom offset of the Chase Cam mode"),
+                .WithDescription("Adjust zoom offset of the Chase Cam mode (Acts as the Z offset for Cockpit and Mounted Camera)"),
 
                 new FloatSlider(MenuDisplayMode.Both, "setting:x_offset", "X OFFSET")
                 .LimitedByRange(-20f, 20f)
@@ -211,11 +211,7 @@ namespace Distance.CameraAdditions
 
             BindAction(ref _keybindZoomOut, config.ZoomOutHotkey, () =>
             {
-                //Prevent the super glitchy camera when zooming in too much
-                if (Config.ZoomOffset > -3f)
-                {
-                    Config.ZoomOffset -= 0.5f;
-                }
+                Config.ZoomOffset -= 0.5f;
             });
 
             BindAction(ref _keybindDefaults, config.DefaultsHotkey, () =>
@@ -238,7 +234,7 @@ namespace Distance.CameraAdditions
                 Config.YOffset += 0.5f;
             });
 
-            BindAction(ref _keybindIncreaseYOffset, config.IncreaseYOffsetHotkey, () =>
+            BindAction(ref _keybindDecreaseYOffset, config.DecreaseYOffsetHotkey, () =>
             {
                 Config.YOffset -= 0.5f;
             });

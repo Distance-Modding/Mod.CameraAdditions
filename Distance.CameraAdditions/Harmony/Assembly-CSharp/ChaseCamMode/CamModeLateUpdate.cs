@@ -8,10 +8,17 @@ namespace Distance.CameraAdditions.Harmony
         [HarmonyPrefix]
         internal static void PositionPrefix(ChaseCamMode __instance)
         {
-            __instance.maxDistanceLowSpeed_ = Mod.Instance.maxDistanceLowSpeed + Mod.Instance.Config.ZoomOffset;
-            __instance.maxDistanceHighSpeed_ = Mod.Instance.maxDistanceHighSpeed + Mod.Instance.Config.ZoomOffset;
-            __instance.minDistance_ = Mod.Instance.minDistance + Mod.Instance.Config.ZoomOffset;
-            __instance.height_ = Mod.Instance.height + (Mod.Instance.Config.ZoomOffset / 4.5f);
+            float zoomOffset;
+            //This is to prevent a super glitchy camera when zooming in too far
+            if(Mod.Instance.Config.ZoomOffset < -3f)
+                zoomOffset = -3f;
+            else
+                zoomOffset = Mod.Instance.Config.ZoomOffset;
+
+            __instance.maxDistanceLowSpeed_ = Mod.Instance.maxDistanceLowSpeed + zoomOffset;
+            __instance.maxDistanceHighSpeed_ = Mod.Instance.maxDistanceHighSpeed + zoomOffset;
+            __instance.minDistance_ = Mod.Instance.minDistance + zoomOffset;
+            __instance.height_ = Mod.Instance.height + (zoomOffset / 4.5f);
 
             if (Mod.Instance.Config.LockCameraPosition)
             {
@@ -22,7 +29,8 @@ namespace Distance.CameraAdditions.Harmony
         [HarmonyPostfix]
         internal static void PositionPostfix(ChaseCamMode __instance)
         {
-            __instance.transform.position += new UnityEngine.Vector3(Mod.Instance.Config.XOffset, Mod.Instance.Config.YOffset, 0f);
+            __instance.transform.position += __instance.transform.right * Mod.Instance.Config.XOffset;
+            __instance.transform.position += __instance.transform.up * Mod.Instance.Config.YOffset;
         }
     }
 }

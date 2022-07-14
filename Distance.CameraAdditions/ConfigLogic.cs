@@ -140,7 +140,7 @@ namespace Distance.CameraAdditions
             Get("IncreaseXOffsetHotkey", "LeftAlt+L");
             Get("DecreaseXOffsetHotkey", "LeftAlt+J");
             Get("IncreaseYOffsetHotkey", "LeftAlt+I");
-            Get("IncreaseYOffsetHotkey", "LeftAlt+K");
+            Get("DecreaseYOffsetHotkey", "LeftAlt+K");
             //Save settings to Config.json
             Save();
         }
