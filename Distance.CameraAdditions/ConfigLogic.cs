@@ -145,7 +145,7 @@ namespace Distance.CameraAdditions
             Save();
         }
 
-        public T Get<T>(string key, T @default = default)
+        public T Get<T>(string key, T @default = default(T))
         {
             return Config.GetOrCreate(key, @default);
         }
