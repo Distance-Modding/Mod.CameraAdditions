@@ -132,6 +132,9 @@ namespace Distance.CameraAdditions
             Set("XOffset", 0f); //XOffset will not remember previous settings
             Get("YOffset", 0f);
             Set("YOffset", 0f); //YOffset will not remember previous settings
+            Get("LockFOV", false);
+            Get("LockCameraPosition", false);
+            Get("EnableFreeCam", false);
             Get("IncreaseFOVHotkey", "LeftControl+P");
             Get("DecreaseFOVHotkey", "LeftControl+O");
             Get("ZoomOutHotkey", "LeftControl+N");

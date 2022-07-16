@@ -92,21 +92,21 @@ namespace Distance.CameraAdditions
 				.WithDescription("Lock the FOV of Chase Cam mode"),
 
 				new FloatSlider(MenuDisplayMode.Both, "setting:zoom_offset", "ZOOM OFFSET")
-				.LimitedByRange(-3f, 20f)
+				.LimitedByRange(-10f, 10f)
 				.WithDefaultValue(0f)
 				.WithGetter(() => Config.ZoomOffset)
 				.WithSetter((x) => Config.ZoomOffset = x)
 				.WithDescription("Adjust zoom offset of the Chase Cam mode (Acts as the Z offset for Cockpit and Mounted Camera)"),
 
 				new FloatSlider(MenuDisplayMode.Both, "setting:x_offset", "X OFFSET")
-				.LimitedByRange(-20f, 20f)
+				.LimitedByRange(-10f, 10f)
 				.WithDefaultValue(0f)
 				.WithGetter(() => Config.XOffset)
 				.WithSetter((x) => Config.XOffset = x)
 				.WithDescription("Adjust the X axis offset of all Car Camera Modes"),
 
 				new FloatSlider(MenuDisplayMode.Both, "setting:y_offset", "Y OFFSET")
-				.LimitedByRange(-20f, 20f)
+				.LimitedByRange(-10f, 10f)
 				.WithDefaultValue(0f)
 				.WithGetter(() => Config.YOffset)
 				.WithSetter((x) => Config.YOffset = x)
@@ -176,7 +176,7 @@ namespace Distance.CameraAdditions
 				.WithTitle("DECREASE Y OFFSET HOTKEY")
 				.WithDescription("Set the hotkey for decreasing the Y offset"),
 			};
-
+            
 			Menus.AddNew(MenuDisplayMode.Both, settingsMenu, "CAMERA ADDITIONS", "Settings for the camera additions mod.");
 		}
 
@@ -251,6 +251,9 @@ namespace Distance.CameraAdditions
 			Config.ZoomOffset = 0f;
 			Config.XOffset = 0f;
 			Config.YOffset = 0f;
+            Config.LockCameraPosition = false;
+            Config.LockFOV = false;
+            Config.FOV = 125;
 		}
 	}
 }
