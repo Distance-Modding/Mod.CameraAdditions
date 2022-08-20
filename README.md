@@ -7,7 +7,8 @@ What this adds:
 - Zoom in and out with an input or slider
 - Enable the free camera during gameplay. (This means it gets added to the selectable cameras during gameplay like the cockpit and hood cameras)
 - Offset the position all Car Cameras with a slider or input
+- Offset the rotation of all Car Cameras with a slider or input
 
 KNOWN ISSUES:
 
-- Lag happens when opening up the camera additions menu due to hotkeys getting set when that happens.
+- Lag happens when opening up the camera additions menu due to hotkeys constantly being set for unknown reason
