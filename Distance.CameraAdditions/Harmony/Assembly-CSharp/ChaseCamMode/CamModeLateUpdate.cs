@@ -10,7 +10,7 @@ namespace Distance.CameraAdditions.Harmony
         {
             float zoomOffset;
             //This is to prevent a super glitchy camera when zooming in too far
-            if(Mod.Instance.Config.ZoomOffset < -3f)
+            if (Mod.Instance.Config.ZoomOffset < -3f)
                 zoomOffset = -3f;
             else
                 zoomOffset = Mod.Instance.Config.ZoomOffset;
@@ -31,6 +31,10 @@ namespace Distance.CameraAdditions.Harmony
         {
             __instance.transform.position += __instance.transform.right * Mod.Instance.Config.XOffset;
             __instance.transform.position += __instance.transform.up * Mod.Instance.Config.YOffset;
+
+            __instance.transform.rotation *= UnityEngine.Quaternion.AngleAxis(Mod.Instance.Config.ZRotationOffset, UnityEngine.Vector3.forward);
+            __instance.transform.rotation *= UnityEngine.Quaternion.AngleAxis(Mod.Instance.Config.XRotationOffset, UnityEngine.Vector3.right);
+            __instance.transform.rotation *= UnityEngine.Quaternion.AngleAxis(Mod.Instance.Config.YRotationOffset, UnityEngine.Vector3.up);
         }
     }
 }

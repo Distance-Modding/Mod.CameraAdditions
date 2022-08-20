@@ -37,6 +37,24 @@ namespace Distance.CameraAdditions
             set { Set("YOffset", value); }
         }
 
+        public float XRotationOffset
+        {
+            get { return Get<float>("XRotationOffset"); }
+            set { Set("XRotationOffset", value); }
+        }
+
+        public float YRotationOffset
+        {
+            get { return Get<float>("YRotationOffset"); }
+            set { Set("YRotationOffset", value); }
+        }
+
+        public float ZRotationOffset
+        {
+            get { return Get<float>("ZRotationOffset"); }
+            set { Set("ZRotationOffset", value); }
+        }
+
         public bool LockFOV
         {
             get { return Get<bool>("LockFOV"); }
@@ -53,6 +71,12 @@ namespace Distance.CameraAdditions
         {
             get { return Get<bool>("EnableFreeCam"); }
             set { Set("EnableFreeCam", value); }
+        }
+
+        public bool EnableRotation
+        {
+            get { return Get<bool>("EnableRotation"); }
+            set { Set("EnableRotation", value); }
         }
 
         public string IncreaseFOVHotkey
@@ -108,6 +132,12 @@ namespace Distance.CameraAdditions
             get { return Get<string>("DecreaseYOffsetHotkey"); }
             set { Set("DecreaseYOffsetHotkey", value); }
         }
+
+        public string EnableRotationHotkey
+        {
+            get { return Get<string>("EnableRotationHotkey"); }
+            set { Set("EnableRotationHotkey", value); }
+        }
         #endregion
 
         internal Settings Config;
@@ -125,16 +155,12 @@ namespace Distance.CameraAdditions
             Load();
             //Setting Defaults
             Get("FOV", 125);
-            Get("FOVOffset", 0);
-            Get("ZoomOffset", 0f);
             Set("ZoomOffset", 0f); //Zoom Offset will not remember previous settings
-            Get("XOffset", 0f);
             Set("XOffset", 0f); //XOffset will not remember previous settings
-            Get("YOffset", 0f);
             Set("YOffset", 0f); //YOffset will not remember previous settings
-            Get("LockFOV", false);
-            Get("LockCameraPosition", false);
-            Get("EnableFreeCam", false);
+            Set("ZRotationOffset", 0f); //same
+            Set("XRotationOffset", 0f); //same
+            Set("YRotationOffset", 0f); //same
             Get("IncreaseFOVHotkey", "LeftControl+P");
             Get("DecreaseFOVHotkey", "LeftControl+O");
             Get("ZoomOutHotkey", "LeftControl+N");
@@ -144,6 +170,7 @@ namespace Distance.CameraAdditions
             Get("DecreaseXOffsetHotkey", "LeftAlt+J");
             Get("IncreaseYOffsetHotkey", "LeftAlt+I");
             Get("DecreaseYOffsetHotkey", "LeftAlt+K");
+            Get("EnableRotationHotkey", "LeftControl+U");
             //Save settings to Config.json
             Save();
         }
