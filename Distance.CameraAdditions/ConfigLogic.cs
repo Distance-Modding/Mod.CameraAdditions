@@ -76,7 +76,7 @@ namespace Distance.CameraAdditions
         public bool EnableRotation
         {
             get { return Get<bool>("EnableRotation"); }
-            set { Set("EnableRotation", value); }
+            set { Set("EnableRotation", value, false); }
         }
 
         public string IncreaseFOVHotkey
@@ -184,6 +184,16 @@ namespace Distance.CameraAdditions
         {
             Config[key] = value;
             Save();
+        }
+
+        public void Set<T>(string key, T value, bool invoke)
+        {
+            Config[key] = value;
+            if (invoke)
+            {
+                OnChanged?.Invoke(this);
+            }
+            Config?.Save();
         }
 
         public void Save()
