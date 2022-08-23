@@ -82,61 +82,61 @@ namespace Distance.CameraAdditions
         public string IncreaseFOVHotkey
         {
             get { return Get<string>("IncreaseFOVHotkey"); }
-            set { Set("IncreaseFOVHotkey", value, false); }
+            set { Set("IncreaseFOVHotkey", value); }
         }
 
         public string DecreaseFOVHotkey
         {
             get { return Get<string>("DecreaseFOVHotkey"); }
-            set { Set("DecreaseFOVHotkey", value, false); }
+            set { Set("DecreaseFOVHotkey", value); }
         }
 
         public string ZoomOutHotkey
         {
             get { return Get<string>("ZoomOutHotkey"); }
-            set { Set("ZoomOutHotkey", value, false); }
+            set { Set("ZoomOutHotkey", value); }
         }
 
         public string ZoomInHotkey
         {
             get { return Get<string>("ZoomInHotkey"); }
-            set { Set("ZoomInHotkey", value, false); }
+            set { Set("ZoomInHotkey", value); }
         }
 
         public string DefaultsHotkey
         {
             get { return Get<string>("DefaultsHotkey"); }
-            set { Set("DefaultsHotkey", value, false); }
+            set { Set("DefaultsHotkey", value); }
         }
 
         public string IncreaseXOffsetHotkey
         {
             get { return Get<string>("IncreaseXOffsetHotkey"); }
-            set { Set("IncreaseXOffsetHotkey", value, false); }
+            set { Set("IncreaseXOffsetHotkey", value); }
         }
 
         public string DecreaseXOffsetHotkey
         {
             get { return Get<string>("DecreaseXOffsetHotkey"); }
-            set { Set("DecreaseXOffsetHotkey", value, false); }
+            set { Set("DecreaseXOffsetHotkey", value); }
         }
 
         public string IncreaseYOffsetHotkey
         {
             get { return Get<string>("IncreaseYOffsetHotkey"); }
-            set { Set("IncreaseYOffsetHotkey", value, false); }
+            set { Set("IncreaseYOffsetHotkey", value); }
         }
 
         public string DecreaseYOffsetHotkey
         {
             get { return Get<string>("DecreaseYOffsetHotkey"); }
-            set { Set("DecreaseYOffsetHotkey", value, false); }
+            set { Set("DecreaseYOffsetHotkey", value); }
         }
 
         public string EnableRotationHotkey
         {
             get { return Get<string>("EnableRotationHotkey"); }
-            set { Set("EnableRotationHotkey", value, false); }
+            set { Set("EnableRotationHotkey", value); }
         }
         #endregion
 

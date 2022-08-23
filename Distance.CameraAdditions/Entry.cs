@@ -226,31 +226,31 @@ namespace Distance.CameraAdditions
 
 		public void OnConfigChanged(ConfigLogic config)
 		{
-			BindAction(ref _keybindIncreaseFOVOffset, config.IncreaseFOVHotkey, () => ++Config.FOVOffset);
+			BindAction(ref _keybindIncreaseFOVOffset, config.IncreaseFOVHotkey, () => ++config.FOVOffset);
 
-			BindAction(ref _keybindDecreaseFOVOffset, config.DecreaseFOVHotkey, () => --Config.FOVOffset);
+			BindAction(ref _keybindDecreaseFOVOffset, config.DecreaseFOVHotkey, () => --config.FOVOffset);
 
             BindAction(ref _keybindZoomIn, config.ZoomInHotkey, () =>
             {
-                if (!Config.EnableRotation) //Check if false to make someone very angry
+                if (!config.EnableRotation) //Check if false to make someone very angry
                 {
-                    Config.ZoomOffset += 0.5f;
+                    config.ZoomOffset += 0.5f;
                 }
                 else
                 {
-                    Config.ZRotationOffset += 1f;
+                    config.ZRotationOffset += 1f;
                 }
             });
 
             BindAction(ref _keybindZoomOut, config.ZoomOutHotkey, () =>
             {
-                if (!Config.EnableRotation)
+                if (!config.EnableRotation)
                 {
-                    Config.ZoomOffset -= 0.5f;
+                    config.ZoomOffset -= 0.5f;
                 }
                 else
                 {
-                    Config.ZRotationOffset -= 1f;
+                    config.ZRotationOffset -= 1f;
                 }
             });
 
@@ -258,53 +258,53 @@ namespace Distance.CameraAdditions
 
 			BindAction(ref _keybindIncreaseXOffset, config.IncreaseXOffsetHotkey, () =>
             {
-                if (!Config.EnableRotation)
+                if (!config.EnableRotation)
                 {
-                    Config.XOffset += 0.5f;
+                    config.XOffset += 0.5f;
                 }
                 else
                 {
-                    Config.XRotationOffset += 1f;
+                    config.XRotationOffset += 1f;
                 }
             });
 
 			BindAction(ref _keybindDecreaseXOffset, config.DecreaseXOffsetHotkey, () =>
             {
-                if (!Config.EnableRotation)
+                if (!config.EnableRotation)
                 {
-                    Config.XOffset -= 0.5f;
+                    config.XOffset -= 0.5f;
                 }
                 else
                 {
-                    Config.XRotationOffset -= 1f;
+                    config.XRotationOffset -= 1f;
                 }
             });
 
 			BindAction(ref _keybindIncreaseYOffset, config.IncreaseYOffsetHotkey, () =>
             {
-                if (!Config.EnableRotation)
+                if (!config.EnableRotation)
                 {
-                    Config.YOffset += 0.5f;
+                    config.YOffset += 0.5f;
                 }
                 else
                 {
-                    Config.YRotationOffset += 1f;
+                    config.YRotationOffset += 1f;
                 }
             });
 
 			BindAction(ref _keybindDecreaseYOffset, config.DecreaseYOffsetHotkey, () =>
             {
-                if (!Config.EnableRotation)
+                if (!config.EnableRotation)
                 {
-                    Config.YOffset -= 0.5f;
+                    config.YOffset -= 0.5f;
                 }
                 else
                 {
-                    Config.YRotationOffset -= 1f;
+                    config.YRotationOffset -= 1f;
                 }
             });
 
-            BindAction(ref _keybindEnableRotation, config.EnableRotationHotkey, () => Config.EnableRotation = !Config.EnableRotation);
+            BindAction(ref _keybindEnableRotation, config.EnableRotationHotkey, () => config.EnableRotation = !config.EnableRotation);
 		}
 
 		public void BindAction(ref Hotkey unbind, string rebind, Action callback)
