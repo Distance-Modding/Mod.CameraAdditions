@@ -173,6 +173,7 @@ namespace Distance.CameraAdditions
             Get("EnableRotationHotkey", "LeftControl+U");
             //Save settings to Config.json
             Save();
+            Mod.Instance.OnConfigChanged(this);
         }
 
         public T Get<T>(string key, T @default = default(T))
