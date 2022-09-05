@@ -11,4 +11,4 @@ What this adds:
 
 KNOWN ISSUES:
 
-- Lag happens when opening up the camera additions menu due to hotkeys constantly being set for unknown reason
+- Lag happens when opening up the camera additions menu due to hotkeys constantly being set for unknown reason. (This only affects certain people)
