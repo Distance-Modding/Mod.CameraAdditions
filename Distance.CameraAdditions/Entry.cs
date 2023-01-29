@@ -227,230 +227,305 @@ namespace Distance.CameraAdditions
 
         public void Update()
         {
-            try
+            if (Input.anyKey)
             {
-                if (Config.IncreaseFOVHotkey.Contains("+"))
+                try
                 {
-                    string[] array = Parse(Config.IncreaseFOVHotkey);
+                    if (Config.IncreaseFOVHotkey.Contains("+"))
+                    {
+                        string[] array = Parse(Config.IncreaseFOVHotkey);
 
-                    if (KeyComboIsPressed(array))
-                        ++Config.FOVOffset;
+                        if (KeyComboIsPressed(array))
+                            ++Config.FOVOffset;
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.IncreaseFOVHotkey))
+                            ++Config.FOVOffset;
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Input.GetKey(Config.IncreaseFOVHotkey))
-                        ++Config.FOVOffset;
-                }
-
-                if (Config.DecreaseFOVHotkey.Contains("+"))
-                {
-                    string[] array = Parse(Config.DecreaseFOVHotkey);
-
-                    if (KeyComboIsPressed(array))
-                        --Config.FOVOffset;
-                }
-                else
-                {
-                    if (Input.GetKey(Config.DecreaseFOVHotkey))
-                        --Config.FOVOffset;
+                    Logger.Error(e.ToString());
+                    Logger.Error("Increase FOV key either does not exist or is formatted incorrectly!");
                 }
 
-                if (Config.ZoomInHotkey.Contains("+"))
+                try
                 {
-                    string[] array = Parse(Config.ZoomInHotkey);
-
-                    if (KeyComboIsPressed(array))
+                    if (Config.DecreaseFOVHotkey.Contains("+"))
                     {
-                        if (!Config.EnableRotation)
-                            Config.ZoomOffset += 0.25f;
-                        else
-                            Config.ZRotationOffset += .5f;
+                        string[] array = Parse(Config.DecreaseFOVHotkey);
+
+                        if (KeyComboIsPressed(array))
+                            --Config.FOVOffset;
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.DecreaseFOVHotkey))
+                            --Config.FOVOffset;
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Input.GetKey(Config.ZoomInHotkey))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.ZoomOffset += 0.25f;
-                        else
-                            Config.ZRotationOffset += .5f;
-                    }
+                    Logger.Error(e.ToString());
+                    Logger.Error("Decrease FOV key either does not exist or is formatted incorrectly!");
                 }
 
-                if (Config.ZoomOutHotkey.Contains("+"))
+                try
                 {
-                    string[] array = Parse(Config.ZoomOutHotkey);
-
-                    if (KeyComboIsPressed(array))
+                    if (Config.ZoomInHotkey.Contains("+"))
                     {
-                        if (!Config.EnableRotation)
-                            Config.ZoomOffset -= 0.25f;
-                        else
-                            Config.ZRotationOffset -= .5f;
+                        string[] array = Parse(Config.ZoomInHotkey);
+
+                        if (KeyComboIsPressed(array))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.ZoomOffset += 0.25f;
+                            else
+                                Config.ZRotationOffset += .5f;
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.ZoomInHotkey))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.ZoomOffset += 0.25f;
+                            else
+                                Config.ZRotationOffset += .5f;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Input.GetKey(Config.ZoomOutHotkey))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.ZoomOffset -= 0.25f;
-                        else
-                            Config.ZRotationOffset -= .5f;
-                    }
-                }
-
-                if (Config.DefaultsHotkey.Contains("+"))
-                {
-                    string[] array = Parse(Config.DefaultsHotkey);
-
-                    if (KeyComboIsPressed(array) && !DefaultWasFired)
-                    {
-                        SetDefaults();
-                        DefaultWasFired = true;
-                    }
-                    else if (!KeyComboIsPressed(array))
-                    {
-                        DefaultWasFired = false;
-                    }
-                }
-                else
-                {
-                    if (Input.GetKey(Config.DefaultsHotkey) && !DefaultWasFired)
-                    {
-                        SetDefaults();
-                        DefaultWasFired = true;
-                    }
-                    else if (!Input.GetKey(Config.DefaultsHotkey))
-                    {
-                        DefaultWasFired = false;
-                    }
+                    Logger.Error(e.ToString());
+                    Logger.Error("Zoom in / Positive Z Rotation key either does not exist or is formatted incorrectly!");
                 }
 
-                if (Config.IncreaseXOffsetHotkey.Contains("+"))
+                try
                 {
-                    string[] array = Parse(Config.IncreaseXOffsetHotkey);
-
-                    if (KeyComboIsPressed(array))
+                    if (Config.ZoomOutHotkey.Contains("+"))
                     {
-                        if (!Config.EnableRotation)
-                            Config.XOffset += 0.25f;
-                        else
-                            Config.XRotationOffset += .5f;
+                        string[] array = Parse(Config.ZoomOutHotkey);
+
+                        if (KeyComboIsPressed(array))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.ZoomOffset -= 0.25f;
+                            else
+                                Config.ZRotationOffset -= .5f;
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.ZoomOutHotkey))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.ZoomOffset -= 0.25f;
+                            else
+                                Config.ZRotationOffset -= .5f;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Input.GetKey(Config.IncreaseXOffsetHotkey))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.XOffset += 0.25f;
-                        else
-                            Config.XRotationOffset += .5f;
-                    }
-                }
-
-                if (Config.DecreaseXOffsetHotkey.Contains("+"))
-                {
-                    string[] array = Parse(Config.DecreaseXOffsetHotkey);
-
-                    if (KeyComboIsPressed(array))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.XOffset -= 0.25f;
-                        else
-                            Config.XRotationOffset -= .5f;
-                    }
-                }
-                else
-                {
-                    if (Input.GetKey(Config.DecreaseXOffsetHotkey))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.XOffset -= 0.25f;
-                        else
-                            Config.XRotationOffset -= .5f;
-                    }
+                    Logger.Error(e.ToString());
+                    Logger.Error("Zoom out / Negative Z Rotation key either does not exist or is formatted incorrectly!");
                 }
 
-                if (Config.IncreaseYOffsetHotkey.Contains("+"))
+                try
                 {
-                    string[] array = Parse(Config.IncreaseYOffsetHotkey);
-
-                    if (KeyComboIsPressed(array))
+                    if (Config.DefaultsHotkey.Contains("+"))
                     {
-                        if (!Config.EnableRotation)
-                            Config.YOffset += 0.25f;
-                        else
-                            Config.YRotationOffset += .5f;
+                        string[] array = Parse(Config.DefaultsHotkey);
+
+                        if (KeyComboIsPressed(array) && !DefaultWasFired)
+                        {
+                            SetDefaults();
+                            DefaultWasFired = true;
+                        }
+                        else if (!KeyComboIsPressed(array))
+                        {
+                            DefaultWasFired = false;
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.DefaultsHotkey) && !DefaultWasFired)
+                        {
+                            SetDefaults();
+                            DefaultWasFired = true;
+                        }
+                        else if (!Input.GetKey(Config.DefaultsHotkey))
+                        {
+                            DefaultWasFired = false;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Input.GetKey(Config.IncreaseYOffsetHotkey))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.YOffset += 0.25f;
-                        else
-                            Config.YRotationOffset += .5f;
-                    }
-                }
-
-                if (Config.DecreaseYOffsetHotkey.Contains("+"))
-                {
-                    string[] array = Parse(Config.DecreaseYOffsetHotkey);
-
-                    if (KeyComboIsPressed(array))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.YOffset -= 0.25f;
-                        else
-                            Config.YRotationOffset -= .5f;
-                    }
-                }
-                else
-                {
-                    if (Input.GetKey(Config.DecreaseYOffsetHotkey))
-                    {
-                        if (!Config.EnableRotation)
-                            Config.YOffset -= 0.25f;
-                        else
-                            Config.YRotationOffset -= .5f;
-                    }
+                    Logger.Error(e.ToString());
+                    Logger.Error("Camera defaults key either does not exist or is formatted incorrectly!");
                 }
 
-                if (Config.EnableRotationHotkey.Contains("+"))
+                try
                 {
-                    string[] array = Parse(Config.EnableRotationHotkey);
+                    if (Config.IncreaseXOffsetHotkey.Contains("+"))
+                    {
+                        string[] array = Parse(Config.IncreaseXOffsetHotkey);
 
-                    if (KeyComboIsPressed(array) && !RotationWasFired)
-                    {
-                        Config.EnableRotation = !Config.EnableRotation;
-                        RotationWasFired = true;
+                        if (KeyComboIsPressed(array))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.XOffset += 0.25f;
+                            else
+                                Config.XRotationOffset += .5f;
+                        }
                     }
-                    else if (!KeyComboIsPressed(array))
+                    else
                     {
-                        RotationWasFired = false;
+                        if (Input.GetKey(Config.IncreaseXOffsetHotkey))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.XOffset += 0.25f;
+                            else
+                                Config.XRotationOffset += .5f;
+                        }
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    if (Input.GetKey(Config.EnableRotationHotkey) && !RotationWasFired)
+                    Logger.Error(e.ToString());
+                    Logger.Error("Increase X offset / Positive X rotation key either does not exist or is formatted incorrectly!");
+                }
+
+                try
+                {
+                    if (Config.DecreaseXOffsetHotkey.Contains("+"))
                     {
-                        Config.EnableRotation = !Config.EnableRotation;
-                        RotationWasFired = true;
+                        string[] array = Parse(Config.DecreaseXOffsetHotkey);
+
+                        if (KeyComboIsPressed(array))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.XOffset -= 0.25f;
+                            else
+                                Config.XRotationOffset -= .5f;
+                        }
                     }
-                    else if (!Input.GetKey(Config.EnableRotationHotkey))
+                    else
                     {
-                        RotationWasFired = false;
+                        if (Input.GetKey(Config.DecreaseXOffsetHotkey))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.XOffset -= 0.25f;
+                            else
+                                Config.XRotationOffset -= .5f;
+                        }
                     }
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e.ToString());
-                Logger.Error("This key either does not exist or is formatted incorrectly!");
+                catch (Exception e)
+                {
+                    Logger.Error(e.ToString());
+                    Logger.Error("Decrease X offset / Negative X rotation key either does not exist or is formatted incorrectly!");
+                }
+
+                try
+                {
+                    if (Config.IncreaseYOffsetHotkey.Contains("+"))
+                    {
+                        string[] array = Parse(Config.IncreaseYOffsetHotkey);
+
+                        if (KeyComboIsPressed(array))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.YOffset += 0.25f;
+                            else
+                                Config.YRotationOffset += .5f;
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.IncreaseYOffsetHotkey))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.YOffset += 0.25f;
+                            else
+                                Config.YRotationOffset += .5f;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e.ToString());
+                    Logger.Error("Increase Y offset / Positive Y rotation key either does not exist or is formatted incorrectly!");
+                }
+
+                try
+                {
+                    if (Config.DecreaseYOffsetHotkey.Contains("+"))
+                    {
+                        string[] array = Parse(Config.DecreaseYOffsetHotkey);
+
+                        if (KeyComboIsPressed(array))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.YOffset -= 0.25f;
+                            else
+                                Config.YRotationOffset -= .5f;
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.DecreaseYOffsetHotkey))
+                        {
+                            if (!Config.EnableRotation)
+                                Config.YOffset -= 0.25f;
+                            else
+                                Config.YRotationOffset -= .5f;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e.ToString());
+                    Logger.Error("Decrease Y offset / Negative Y rotation key either does not exist or is formatted incorrectly!");
+                }
+
+                try
+                {
+                    if (Config.EnableRotationHotkey.Contains("+"))
+                    {
+                        string[] array = Parse(Config.EnableRotationHotkey);
+
+                        if (KeyComboIsPressed(array) && !RotationWasFired)
+                        {
+                            Config.EnableRotation = !Config.EnableRotation;
+                            RotationWasFired = true;
+                        }
+                        else if (!KeyComboIsPressed(array))
+                        {
+                            RotationWasFired = false;
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey(Config.EnableRotationHotkey) && !RotationWasFired)
+                        {
+                            Config.EnableRotation = !Config.EnableRotation;
+                            RotationWasFired = true;
+                        }
+                        else if (!Input.GetKey(Config.EnableRotationHotkey))
+                        {
+                            RotationWasFired = false;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e.ToString());
+                    Logger.Error("Enable rotation key either does not exist or is formatted incorrectly!");
+                }
             }
         }
 
