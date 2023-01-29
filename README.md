@@ -10,5 +10,3 @@ What this adds:
 - Offset the rotation of all Car Cameras with a slider or input
 
 KNOWN ISSUES:
-
-- Lag happens when opening up the camera additions menu due to hotkeys constantly being set for unknown reason. (This only affects certain people)
