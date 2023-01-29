@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Centrifuge.Distance.Game;
+using Centrifuge.Distance.GUI.Controls;
+using Centrifuge.Distance.GUI.Data;
 using Reactor.API.Attributes;
 using Reactor.API.Input;
 using Reactor.API.Interfaces.Systems;
 using Reactor.API.Logging;
 using Reactor.API.Runtime.Patching;
-using Centrifuge.Distance.Game;
-using Centrifuge.Distance.GUI.Controls;
-using Centrifuge.Distance.GUI.Data;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Distance.CameraAdditions
@@ -30,7 +33,10 @@ namespace Distance.CameraAdditions
 		public float YOffset { get; }
 		public float XOffset { get; }
 
-		public void Initialize(IManager manager)
+        private bool DefaultWasFired;
+        private bool RotationWasFired;
+
+        public void Initialize(IManager manager)
 		{
 			//Dont remove the object when entering new scenes
 			DontDestroyOnLoad(this);
@@ -40,13 +46,13 @@ namespace Distance.CameraAdditions
 			Manager = manager;
 			Logger = LogManager.GetForCurrentAssembly();
 			Config = gameObject.AddComponent<ConfigLogic>();
-			MaxDistanceLowSpeed = 4.5f;
+            MaxDistanceLowSpeed = 4.5f;
 			MaxDistanceHighSpeed = 3.25f;
 			MinDistance = 4f;
 			Height = 1.3f;
 
-			//Subscribe to config event
-			Config.OnChanged += OnConfigChanged;
+        //Subscribe to config event
+        Config.OnChanged += OnConfigChanged;
 
 			try
 			{
@@ -212,110 +218,277 @@ namespace Distance.CameraAdditions
 			Menus.AddNew(MenuDisplayMode.Both, settingsMenu, "CAMERA ADDITIONS", "Settings for the camera additions mod.");
 		}
 
-		#region Key Bindings
-		private Hotkey _keybindIncreaseFOVOffset;
-		private Hotkey _keybindDecreaseFOVOffset;
-		private Hotkey _keybindZoomIn;
-		private Hotkey _keybindZoomOut;
-		private Hotkey _keybindDefaults;
-		private Hotkey _keybindIncreaseXOffset;
-		private Hotkey _keybindDecreaseXOffset;
-		private Hotkey _keybindIncreaseYOffset;
-		private Hotkey _keybindDecreaseYOffset;
-        private Hotkey _keybindEnableRotation;
+        #region Key Bindings
 
-		public void OnConfigChanged(ConfigLogic config)
+        public void OnConfigChanged(ConfigLogic config)
 		{
-			BindAction(ref _keybindIncreaseFOVOffset, config.IncreaseFOVHotkey, () => ++config.FOVOffset);
 
-			BindAction(ref _keybindDecreaseFOVOffset, config.DecreaseFOVHotkey, () => --config.FOVOffset);
+        }
 
-            BindAction(ref _keybindZoomIn, config.ZoomInHotkey, () =>
+        public void Update()
+        {
+            try
             {
-                if (!config.EnableRotation) //Check if false to make someone very angry
+                if (Config.IncreaseFOVHotkey.Contains("+"))
                 {
-                    config.ZoomOffset += 0.5f;
+                    string[] array = Parse(Config.IncreaseFOVHotkey);
+
+                    if (KeyComboIsPressed(array))
+                        ++Config.FOVOffset;
                 }
                 else
                 {
-                    config.ZRotationOffset += 1f;
+                    if (Input.GetKey(Config.IncreaseFOVHotkey))
+                        ++Config.FOVOffset;
                 }
-            });
 
-            BindAction(ref _keybindZoomOut, config.ZoomOutHotkey, () =>
-            {
-                if (!config.EnableRotation)
+                if (Config.DecreaseFOVHotkey.Contains("+"))
                 {
-                    config.ZoomOffset -= 0.5f;
+                    string[] array = Parse(Config.DecreaseFOVHotkey);
+
+                    if (KeyComboIsPressed(array))
+                        --Config.FOVOffset;
                 }
                 else
                 {
-                    config.ZRotationOffset -= 1f;
+                    if (Input.GetKey(Config.DecreaseFOVHotkey))
+                        --Config.FOVOffset;
                 }
-            });
 
-			BindAction(ref _keybindDefaults, config.DefaultsHotkey, () => SetDefaults());
-
-			BindAction(ref _keybindIncreaseXOffset, config.IncreaseXOffsetHotkey, () =>
-            {
-                if (!config.EnableRotation)
+                if (Config.ZoomInHotkey.Contains("+"))
                 {
-                    config.XOffset += 0.5f;
+                    string[] array = Parse(Config.ZoomInHotkey);
+
+                    if (KeyComboIsPressed(array))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.ZoomOffset += 0.25f;
+                        else
+                            Config.ZRotationOffset += .5f;
+                    }
                 }
                 else
                 {
-                    config.XRotationOffset += 1f;
+                    if (Input.GetKey(Config.ZoomInHotkey))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.ZoomOffset += 0.25f;
+                        else
+                            Config.ZRotationOffset += .5f;
+                    }
                 }
-            });
 
-			BindAction(ref _keybindDecreaseXOffset, config.DecreaseXOffsetHotkey, () =>
-            {
-                if (!config.EnableRotation)
+                if (Config.ZoomOutHotkey.Contains("+"))
                 {
-                    config.XOffset -= 0.5f;
+                    string[] array = Parse(Config.ZoomOutHotkey);
+
+                    if (KeyComboIsPressed(array))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.ZoomOffset -= 0.25f;
+                        else
+                            Config.ZRotationOffset -= .5f;
+                    }
                 }
                 else
                 {
-                    config.XRotationOffset -= 1f;
+                    if (Input.GetKey(Config.ZoomOutHotkey))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.ZoomOffset -= 0.25f;
+                        else
+                            Config.ZRotationOffset -= .5f;
+                    }
                 }
-            });
 
-			BindAction(ref _keybindIncreaseYOffset, config.IncreaseYOffsetHotkey, () =>
-            {
-                if (!config.EnableRotation)
+                if (Config.DefaultsHotkey.Contains("+"))
                 {
-                    config.YOffset += 0.5f;
+                    string[] array = Parse(Config.DefaultsHotkey);
+
+                    if (KeyComboIsPressed(array) && !DefaultWasFired)
+                    {
+                        SetDefaults();
+                        DefaultWasFired = true;
+                    }
+                    else if (!KeyComboIsPressed(array))
+                    {
+                        DefaultWasFired = false;
+                    }
                 }
                 else
                 {
-                    config.YRotationOffset += 1f;
+                    if (Input.GetKey(Config.DefaultsHotkey) && !DefaultWasFired)
+                    {
+                        SetDefaults();
+                        DefaultWasFired = true;
+                    }
+                    else if (!Input.GetKey(Config.DefaultsHotkey))
+                    {
+                        DefaultWasFired = false;
+                    }
                 }
-            });
 
-			BindAction(ref _keybindDecreaseYOffset, config.DecreaseYOffsetHotkey, () =>
-            {
-                if (!config.EnableRotation)
+                if (Config.IncreaseXOffsetHotkey.Contains("+"))
                 {
-                    config.YOffset -= 0.5f;
+                    string[] array = Parse(Config.IncreaseXOffsetHotkey);
+
+                    if (KeyComboIsPressed(array))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.XOffset += 0.25f;
+                        else
+                            Config.XRotationOffset += .5f;
+                    }
                 }
                 else
                 {
-                    config.YRotationOffset -= 1f;
+                    if (Input.GetKey(Config.IncreaseXOffsetHotkey))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.XOffset += 0.25f;
+                        else
+                            Config.XRotationOffset += .5f;
+                    }
                 }
-            });
 
-            BindAction(ref _keybindEnableRotation, config.EnableRotationHotkey, () => config.EnableRotation = !config.EnableRotation);
-		}
+                if (Config.DecreaseXOffsetHotkey.Contains("+"))
+                {
+                    string[] array = Parse(Config.DecreaseXOffsetHotkey);
 
-		public void BindAction(ref Hotkey unbind, string rebind, Action callback)
-		{
-			if (unbind != null)
-			{
-				Manager.Hotkeys.UnbindHotkey(unbind);
-			}
+                    if (KeyComboIsPressed(array))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.XOffset -= 0.25f;
+                        else
+                            Config.XRotationOffset -= .5f;
+                    }
+                }
+                else
+                {
+                    if (Input.GetKey(Config.DecreaseXOffsetHotkey))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.XOffset -= 0.25f;
+                        else
+                            Config.XRotationOffset -= .5f;
+                    }
+                }
 
-			unbind = Manager.Hotkeys.BindHotkey(rebind, callback, true);
-		}
+                if (Config.IncreaseYOffsetHotkey.Contains("+"))
+                {
+                    string[] array = Parse(Config.IncreaseYOffsetHotkey);
+
+                    if (KeyComboIsPressed(array))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.YOffset += 0.25f;
+                        else
+                            Config.YRotationOffset += .5f;
+                    }
+                }
+                else
+                {
+                    if (Input.GetKey(Config.IncreaseYOffsetHotkey))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.YOffset += 0.25f;
+                        else
+                            Config.YRotationOffset += .5f;
+                    }
+                }
+
+                if (Config.DecreaseYOffsetHotkey.Contains("+"))
+                {
+                    string[] array = Parse(Config.DecreaseYOffsetHotkey);
+
+                    if (KeyComboIsPressed(array))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.YOffset -= 0.25f;
+                        else
+                            Config.YRotationOffset -= .5f;
+                    }
+                }
+                else
+                {
+                    if (Input.GetKey(Config.DecreaseYOffsetHotkey))
+                    {
+                        if (!Config.EnableRotation)
+                            Config.YOffset -= 0.25f;
+                        else
+                            Config.YRotationOffset -= .5f;
+                    }
+                }
+
+                if (Config.EnableRotationHotkey.Contains("+"))
+                {
+                    string[] array = Parse(Config.EnableRotationHotkey);
+
+                    if (KeyComboIsPressed(array) && !RotationWasFired)
+                    {
+                        Config.EnableRotation = !Config.EnableRotation;
+                        RotationWasFired = true;
+                    }
+                    else if (!KeyComboIsPressed(array))
+                    {
+                        RotationWasFired = false;
+                    }
+                }
+                else
+                {
+                    if (Input.GetKey(Config.EnableRotationHotkey) && !RotationWasFired)
+                    {
+                        Config.EnableRotation = !Config.EnableRotation;
+                        RotationWasFired = true;
+                    }
+                    else if (!Input.GetKey(Config.EnableRotationHotkey))
+                    {
+                        RotationWasFired = false;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.ToString());
+                Logger.Error("This key either does not exist or is formatted incorrectly!");
+            }
+        }
+
+        private string[] Parse(string hotkey)
+        {
+            string[] array = { };
+
+            string modifiedHotkeyString = hotkey;
+            if (Regex.IsMatch(modifiedHotkeyString, @"^[A-z +]+"))
+            {
+                if (modifiedHotkeyString.EndsWith("+"))
+                {
+                    modifiedHotkeyString.Substring(0, modifiedHotkeyString.Length - 1);
+                }
+                
+                array = hotkey.Split('+');
+            }
+
+            string[] noDuplicates = array.Distinct().ToArray();
+            return noDuplicates;
+        }
+
+        private bool KeyComboIsPressed(string[] keys)
+        {
+            bool pressed = false;
+            foreach (string s in keys)
+            {
+                if (Input.GetKey(s))
+                {
+                    pressed = true;
+                    continue;
+                }
+                pressed = false;
+                break;
+            }
+
+            return pressed;
+        }
 		#endregion
 
 		//Function should be used before any Chase Camera becomes active

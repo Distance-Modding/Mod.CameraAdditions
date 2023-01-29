@@ -10,67 +10,67 @@ namespace Distance.CameraAdditions
         public int FOV
         {
             get { return Get<int>("FOV"); }
-            set { Set("FOV", value); }
+            set { Set("FOV", value, false); }
         }
 
         public int FOVOffset
         {
             get { return Get<int>("FOVOffset"); }
-            set { Set("FOVOffset", value); }
+            set { Set("FOVOffset", value, false); }
         }
 
         public float ZoomOffset
         {
             get { return Get<float>("ZoomOffset"); }
-            set { Set("ZoomOffset", value); }
+            set { Set("ZoomOffset", value, false); }
         }
 
         public float XOffset
         {
             get { return Get<float>("XOffset"); }
-            set { Set("XOffset", value); }
+            set { Set("XOffset", value, false); }
         }
 
         public float YOffset
         {
             get { return Get<float>("YOffset"); }
-            set { Set("YOffset", value); }
+            set { Set("YOffset", value, false); }
         }
 
         public float XRotationOffset
         {
             get { return Get<float>("XRotationOffset"); }
-            set { Set("XRotationOffset", value); }
+            set { Set("XRotationOffset", value, false); }
         }
 
         public float YRotationOffset
         {
             get { return Get<float>("YRotationOffset"); }
-            set { Set("YRotationOffset", value); }
+            set { Set("YRotationOffset", value, false); }
         }
 
         public float ZRotationOffset
         {
             get { return Get<float>("ZRotationOffset"); }
-            set { Set("ZRotationOffset", value); }
+            set { Set("ZRotationOffset", value, false); }
         }
 
         public bool LockFOV
         {
             get { return Get<bool>("LockFOV"); }
-            set { Set("LockFOV", value); }
+            set { Set("LockFOV", value, false); }
         }
 
         public bool LockCameraPosition
         {
             get { return Get<bool>("LockCameraPosition"); }
-            set { Set("LockCameraPosition", value); }
+            set { Set("LockCameraPosition", value, false); }
         }
 
         public bool EnableFreeCam
         {
             get { return Get<bool>("EnableFreeCam"); }
-            set { Set("EnableFreeCam", value); }
+            set { Set("EnableFreeCam", value, false); }
         }
 
         public bool EnableRotation
@@ -82,61 +82,61 @@ namespace Distance.CameraAdditions
         public string IncreaseFOVHotkey
         {
             get { return Get<string>("IncreaseFOVHotkey"); }
-            set { Set("IncreaseFOVHotkey", value); }
+            set { Set("IncreaseFOVHotkey", value, true); }
         }
 
         public string DecreaseFOVHotkey
         {
             get { return Get<string>("DecreaseFOVHotkey"); }
-            set { Set("DecreaseFOVHotkey", value); }
+            set { Set("DecreaseFOVHotkey", value, true); }
         }
 
         public string ZoomOutHotkey
         {
             get { return Get<string>("ZoomOutHotkey"); }
-            set { Set("ZoomOutHotkey", value); }
+            set { Set("ZoomOutHotkey", value, true); }
         }
 
         public string ZoomInHotkey
         {
             get { return Get<string>("ZoomInHotkey"); }
-            set { Set("ZoomInHotkey", value); }
+            set { Set("ZoomInHotkey", value, true); }
         }
 
         public string DefaultsHotkey
         {
             get { return Get<string>("DefaultsHotkey"); }
-            set { Set("DefaultsHotkey", value); }
+            set { Set("DefaultsHotkey", value, true); }
         }
 
         public string IncreaseXOffsetHotkey
         {
             get { return Get<string>("IncreaseXOffsetHotkey"); }
-            set { Set("IncreaseXOffsetHotkey", value); }
+            set { Set("IncreaseXOffsetHotkey", value, true); }
         }
 
         public string DecreaseXOffsetHotkey
         {
             get { return Get<string>("DecreaseXOffsetHotkey"); }
-            set { Set("DecreaseXOffsetHotkey", value); }
+            set { Set("DecreaseXOffsetHotkey", value, true); }
         }
 
         public string IncreaseYOffsetHotkey
         {
             get { return Get<string>("IncreaseYOffsetHotkey"); }
-            set { Set("IncreaseYOffsetHotkey", value); }
+            set { Set("IncreaseYOffsetHotkey", value, true); }
         }
 
         public string DecreaseYOffsetHotkey
         {
             get { return Get<string>("DecreaseYOffsetHotkey"); }
-            set { Set("DecreaseYOffsetHotkey", value); }
+            set { Set("DecreaseYOffsetHotkey", value, true); }
         }
 
         public string EnableRotationHotkey
         {
             get { return Get<string>("EnableRotationHotkey"); }
-            set { Set("EnableRotationHotkey", value); }
+            set { Set("EnableRotationHotkey", value, true); }
         }
         #endregion
 
@@ -161,16 +161,16 @@ namespace Distance.CameraAdditions
             Set("ZRotationOffset", 0f); //same
             Set("XRotationOffset", 0f); //same
             Set("YRotationOffset", 0f); //same
-            Get("IncreaseFOVHotkey", "LeftControl+P");
-            Get("DecreaseFOVHotkey", "LeftControl+O");
-            Get("ZoomOutHotkey", "LeftControl+N");
-            Get("ZoomInHotkey", "LeftControl+M");
-            Get("DefaultsHotkey", "LeftControl+L");
-            Get("IncreaseXOffsetHotkey", "LeftAlt+L");
-            Get("DecreaseXOffsetHotkey", "LeftAlt+J");
-            Get("IncreaseYOffsetHotkey", "LeftAlt+I");
-            Get("DecreaseYOffsetHotkey", "LeftAlt+K");
-            Get("EnableRotationHotkey", "LeftControl+U");
+            Get("IncreaseFOVHotkey", "left ctrl+p");
+            Get("DecreaseFOVHotkey", "left ctrl+o");
+            Get("ZoomOutHotkey", "left ctrl+n");
+            Get("ZoomInHotkey", "left ctrl+m");
+            Get("DefaultsHotkey", "left ctrl+l");
+            Get("IncreaseXOffsetHotkey", "left alt+l");
+            Get("DecreaseXOffsetHotkey", "left alt+j");
+            Get("IncreaseYOffsetHotkey", "left alt+i");
+            Get("DecreaseYOffsetHotkey", "left alt+k");
+            Get("EnableRotationHotkey", "left ctrl+u");
             //Save settings to Config.json
             Save();
             Mod.Instance.OnConfigChanged(this);
@@ -190,11 +190,11 @@ namespace Distance.CameraAdditions
         public void Set<T>(string key, T value, bool invoke)
         {
             Config[key] = value;
+            Config?.Save();
             if (invoke)
             {
                 OnChanged?.Invoke(this);
             }
-            Config?.Save();
         }
 
         public void Save()
