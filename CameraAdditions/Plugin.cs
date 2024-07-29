@@ -28,13 +28,13 @@ namespace CameraAdditions
         public static string IncreaseXShortcutKey = "The Increase X Offset Shortcut";
         public static string IncreaseYShortcutKey = "The Increase Y Offset Shortcut";
         public static string IncreaseZShortcutKey = "The Increase Z or Zoom Offset Shortcut";
-        public static string LockPositionKey = "Lock the Camera's Position";
-        public static string LockFOVKey = "Lock the Camera's FOV";
+        public static string LockPositionKey = "Lock the Cameras Position";
+        public static string LockFOVKey = "Lock the Cameras FOV";
         public static string XOffsetKey = "The Offset of the Position on the X axis";
         public static string XRotationOffsetKey = "The Offset of the Rotation on the X axis";
         public static string YOffsetKey = "The Offset of the Position on the Y axis";
         public static string YRotationOffsetKey = "The Offset of the Rotation on the Y axis";
-        public static string ZoomOffsetKey = "The Offset of the Camera's Zoom";
+        public static string ZoomOffsetKey = "The Offset of the Cameras Zoom";
         public static string ZRotationOffsetKey = "The Offset of the Rotation on the Z axis";
 
         //Config Entries
@@ -103,7 +103,7 @@ namespace CameraAdditions
             LockCameraPosition = Config.Bind<bool>("General",
                 LockPositionKey,
                 false,
-                new ConfigDescription("Lock the camera's position when in Chase Cam mode"));
+                new ConfigDescription("Lock the cameras position when in Chase Cam mode"));
 
             FOVOffset = Config.Bind<int>("General",
                 FOVOffsetKey,
