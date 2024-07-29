@@ -3,7 +3,7 @@
 namespace CameraAdditions.Patches
 {
     [HarmonyPatch(typeof(AbstractCamMode), nameof(AbstractCamMode.CamModeLateUpdate))]
-    internal static class AbstractCamMode__Prefix__CamModeLateUpdate
+    internal static class AbstractCamMode__CamModeLateUpdate
     {
         [HarmonyPrefix]
         internal static void PositionPrefix(AbstractCamMode __instance)
