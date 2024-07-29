@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace Distance.CameraAdditions.Harmony
+namespace CameraAdditions.Patches
 {
     [HarmonyPatch(typeof(SpectatorFreeCamera), "CamModeInitialize")]
     internal static class SpectatorFreeCamera__CamModeInitialize
@@ -9,7 +9,7 @@ namespace Distance.CameraAdditions.Harmony
         internal static void AddFreeCameraToPlayModeCycle(SpectatorFreeCamera __instance)
         {
             //This is the easiest thing ever wow
-            if (Mod.Instance.Config.EnableFreeCam)
+            if (Mod.EnableFreeCam.Value)
             {
                 __instance.includeInPlayModeCycle_ = true;
             }

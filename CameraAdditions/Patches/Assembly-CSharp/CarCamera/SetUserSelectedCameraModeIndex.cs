@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
 
-namespace Distance.CameraAdditions.Harmony
+namespace CameraAdditions.Patches
 {
-    [HarmonyPatch(typeof(CarCamera), "IncrementCameraModes")]
-    internal static class CarCamera__IncrementCameraModes
+    [HarmonyPatch(typeof(CarCamera), "SetUserSelectedCameraModeIndex")]
+    internal static class CarCamera__SetUserSelectedCameraModeIndex
     {
         [HarmonyPostfix]
         internal static void SetChaseCamValues(CarCamera __instance)

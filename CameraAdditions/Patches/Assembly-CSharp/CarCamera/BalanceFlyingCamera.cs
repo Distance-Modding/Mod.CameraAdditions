@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using HarmonyLib;
-using System.Reflection.Emit;
+﻿using HarmonyLib;
 
-namespace Distance.CameraAdditions.Harmony
+namespace CameraAdditions.Patches
 {
     /*[HarmonyPatch(typeof(CarCamera), "BalanceFlyingCamera")]
     internal class CarCamera__BalanceFlyingCamera

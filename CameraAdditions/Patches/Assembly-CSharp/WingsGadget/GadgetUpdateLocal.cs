@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
+using System.Collections.Generic;
 using System.Reflection.Emit;
 
-namespace Distance.CameraAdditions.Harmony
+namespace CameraAdditions.Patches
 {
     /*[HarmonyPatch(typeof(WingsGadget), "GadgetUpdateLocal")]
     internal class WingsGadget__GadgetUpdateLocal
