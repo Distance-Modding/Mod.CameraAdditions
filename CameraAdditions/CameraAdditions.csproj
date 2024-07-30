@@ -55,11 +55,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Patches\Assembly-CSharp\AbstractCamMode\CamModeLateUpdate.cs" />
     <Compile Include="Patches\Assembly-CSharp\CarCamera\BalanceFlyingCamera.cs" />
     <Compile Include="Patches\Assembly-CSharp\CarCamera\IncrementCameraModes.cs" />
     <Compile Include="Patches\Assembly-CSharp\CarCamera\SetCameraFOV.cs" />
     <Compile Include="Patches\Assembly-CSharp\CarCamera\SetUserSelectedCameraModeIndex.cs" />
+    <Compile Include="Patches\Assembly-CSharp\ChaseCamMode\CamModeLateUpdate.cs" />
+    <Compile Include="Patches\Assembly-CSharp\CockpitCamMode\CamModeLateUpdate.cs" />
+    <Compile Include="Patches\Assembly-CSharp\MountedCamMode\CamModeLateUpdate.cs" />
     <Compile Include="Patches\Assembly-CSharp\SpectatorFreeCamera\CamModeInitializer.cs" />
     <Compile Include="Patches\Assembly-CSharp\WingsGadget\GadgetUpdateLocal.cs" />
     <Compile Include="Plugin.cs" />

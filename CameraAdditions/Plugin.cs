@@ -108,8 +108,7 @@ namespace CameraAdditions
             FOVOffset = Config.Bind<int>("General",
                 FOVOffsetKey,
                 0,
-                new ConfigDescription("Adjust the offset of the FOV (Affects all cameras)",
-                    new AcceptableValueRange<int>(-50, 50)));
+                new ConfigDescription("Adjust the offset of the FOV (Affects all cameras)"));
 
             LockFOV = Config.Bind<bool>("General",
                 LockFOVKey,
@@ -125,38 +124,32 @@ namespace CameraAdditions
             XOffset = Config.Bind<float>("Position Offsets",
                 XOffsetKey,
                 0f,
-                new ConfigDescription("Adjust the X axis offset of all Car Camera Modes",
-                    new AcceptableValueRange<float>(-20f, 20f)));
+                new ConfigDescription("Adjust the X axis offset of all Car Camera Modes"));
 
             YOffset = Config.Bind<float>("Position Offsets",
                 YOffsetKey,
                 0f,
-                new ConfigDescription("Adjust the Y axis offset of all Car Camera Modes",
-                    new AcceptableValueRange<float>(-20f, 20f)));
+                new ConfigDescription("Adjust the Y axis offset of all Car Camera Modes"));
 
             ZoomOffset = Config.Bind<float>("Position Offsets",
                 ZoomOffsetKey,
                 0f,
-                new ConfigDescription("Adjust the Z axis offset of all Car Camera Modes (For the Chase Camera it affects the Zoom, not the Z axis)",
-                    new AcceptableValueRange<float>(-20f, 20f)));
+                new ConfigDescription("Adjust the Z axis offset of all Car Camera Modes (For the Chase Camera it affects the Zoom, not the Z axis)"));
 
             XRotationOffset = Config.Bind<float>("Rotation Offsets",
                 XRotationOffsetKey,
                 0f,
-                new ConfigDescription("Adjust the X rotational offset of all Car Camera Modes",
-                    new AcceptableValueRange<float>(-90f, 90f)));
+                new ConfigDescription("Adjust the X rotational offset of all Car Camera Modes"));
 
             YRotationOffset = Config.Bind<float>("Rotation Offsets",
                 YRotationOffsetKey,
                 0f,
-                new ConfigDescription("Adjust the Y rotational offset of all Car Camera Modes",
-                    new AcceptableValueRange<float>(-90f, 90f)));
+                new ConfigDescription("Adjust the Y rotational offset of all Car Camera Modes"));
 
             ZRotationOffset = Config.Bind<float>("Rotation Offsets",
                 ZRotationOffsetKey,
                 0f,
-                new ConfigDescription("Adjust the Z rotational offset of all Car Camera Modes",
-                    new AcceptableValueRange<float>(-90f, 90f)));
+                new ConfigDescription("Adjust the Z rotational offset of all Car Camera Modes"));
 
             DefaultsShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 DefaultShortcutKey,
@@ -244,13 +237,13 @@ namespace CameraAdditions
                 if (EnableRotationShortcut.Value.IsDown())
                     shortcutsAffectRotation = !shortcutsAffectRotation;
 
-                if (IncreaseFOVShortcut.Value.IsDown())
+                if (IncreaseFOVShortcut.Value.IsPressed())
                     FOVOffset.Value++;
 
-                if (DecreaseFOVShortcut.Value.IsDown())
+                if (DecreaseFOVShortcut.Value.IsPressed())
                     FOVOffset.Value--;
 
-                if (IncreaseXOffsetShortcut.Value.IsDown())
+                if (IncreaseXOffsetShortcut.Value.IsPressed())
                 {
                     if (!shortcutsAffectRotation)
                         XOffset.Value += 0.25f;
@@ -258,7 +251,7 @@ namespace CameraAdditions
                         XRotationOffset.Value += .5f;
                 }
 
-                if (DecreaseXOffsetShortcut.Value.IsDown())
+                if (DecreaseXOffsetShortcut.Value.IsPressed())
                 {
                     if (!shortcutsAffectRotation)
                         XOffset.Value -= 0.25f;
@@ -266,7 +259,7 @@ namespace CameraAdditions
                         XRotationOffset.Value -= .5f;
                 }
 
-                if (IncreaseYOffsetShortcut.Value.IsDown())
+                if (IncreaseYOffsetShortcut.Value.IsPressed())
                 {
                     if (!shortcutsAffectRotation)
                         YOffset.Value += 0.25f;
@@ -274,7 +267,7 @@ namespace CameraAdditions
                         YRotationOffset.Value += .5f;
                 }
 
-                if (DecreaseYOffsetShortcut.Value.IsDown())
+                if (DecreaseYOffsetShortcut.Value.IsPressed())
                 {
                     if (!shortcutsAffectRotation)
                         YOffset.Value -= 0.25f;
@@ -282,7 +275,7 @@ namespace CameraAdditions
                         YRotationOffset.Value -= .5f;
                 }
 
-                if (IncreaseZOffsetShortcut.Value.IsDown())
+                if (IncreaseZOffsetShortcut.Value.IsPressed())
                 {
                     if (!shortcutsAffectRotation)
                         ZoomOffset.Value += 0.25f;
@@ -290,16 +283,13 @@ namespace CameraAdditions
                         ZRotationOffset.Value += .5f;
                 }
 
-                if (DecreaseZOffsetShortcut.Value.IsDown())
+                if (DecreaseZOffsetShortcut.Value.IsPressed())
                 {
                     if (!shortcutsAffectRotation)
                         ZoomOffset.Value -= 0.25f;
                     else
                         ZRotationOffset.Value -= .5f;
                 }
-
-
-
             }
         }
 
