@@ -12,7 +12,7 @@ namespace CameraAdditions
         //Mod Details
         private const string modGUID = "Distance.CameraAdditions";
         private const string modName = "Camera Additions";
-        private const string modVersion = "1.2.6";
+        private const string modVersion = "1.2.7";
 
         //Config Entry Strings
         public static string DecreaseFOVShortcutKey = "The Decrease FOV Shortcut";
@@ -22,20 +22,20 @@ namespace CameraAdditions
         public static string DefaultShortcutKey = "The Shortcut that sets all values to their Defaults";
         public static string EnableFreeCamKey = "Enable Free Cam";
         public static string EnableRotationShortcutKey = "The Shortcut that toggles whether the offset shortcuts affect rotation";
-        public static string FOVKey = "The Locked FOV Value";
-        public static string FOVOffsetKey = "The current FOV Offset";
+        public static string FOVKey = "Locked FOV Value";
+        public static string FOVOffsetKey = "FOV Offset";
         public static string IncreaseFOVShortcutKey = "The Increase FOV Shortcut";
         public static string IncreaseXShortcutKey = "The Increase X Offset Shortcut";
         public static string IncreaseYShortcutKey = "The Increase Y Offset Shortcut";
         public static string IncreaseZShortcutKey = "The Increase Z or Zoom Offset Shortcut";
         public static string LockPositionKey = "Lock the Cameras Position";
         public static string LockFOVKey = "Lock the Cameras FOV";
-        public static string XOffsetKey = "The Offset of the Position on the X axis";
-        public static string XRotationOffsetKey = "The Offset of the Rotation on the X axis";
-        public static string YOffsetKey = "The Offset of the Position on the Y axis";
-        public static string YRotationOffsetKey = "The Offset of the Rotation on the Y axis";
-        public static string ZoomOffsetKey = "The Offset of the Cameras Zoom";
-        public static string ZRotationOffsetKey = "The Offset of the Rotation on the Z axis";
+        public static string XOffsetKey = "Offset of X axis Position";
+        public static string XRotationOffsetKey = "Offset of X axis Rotation";
+        public static string YOffsetKey = "Offset of Y axis Position";
+        public static string YRotationOffsetKey = "Offset of Y axis Rotation";
+        public static string ZoomOffsetKey = "Offset of Z axis Position";
+        public static string ZRotationOffsetKey = "Offset of Z axis Rotation";
 
         //Config Entries
         public static ConfigEntry<bool> EnableFreeCam { get; set; }
