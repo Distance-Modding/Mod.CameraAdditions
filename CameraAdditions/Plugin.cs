@@ -6,13 +6,20 @@ using System;
 
 namespace CameraAdditions
 {
+    /*Added:
+     * Changed default keybinds to something more sensible
+     * Added an option to toggle Chase Camera's collision
+     * Added a slider to control the Draw Distance directly. Allows you to go much lower and way beyond normal limits
+     */
+    //MAKE A CONFIG FOR DRAW DISTANCE SLIDER. PATCH THE SETCAMERAIMAGEEFFECTS IN GRAPHICSSETTINGS AND ON YOUR CONFIG CHANGE MAKE G.SYS.SETTINGS FIRE SETCAMERASETTINGS KTHXBYE
+
     [BepInPlugin(modGUID, modName, modVersion)]
     public sealed class Mod : BaseUnityPlugin
     {
         //Mod Details
         private const string modGUID = "Distance.CameraAdditions";
         private const string modName = "Camera Additions";
-        private const string modVersion = "1.2.7";
+        private const string modVersion = "1.3.0";
 
         //Config Entry Strings
         public static string DecreaseFOVShortcutKey = "The Decrease FOV Shortcut";
@@ -41,6 +48,8 @@ namespace CameraAdditions
         public static ConfigEntry<bool> EnableFreeCam { get; set; }
         public static ConfigEntry<bool> LockCameraPosition { get; set; }
         public static ConfigEntry<bool> LockFOV { get; set; }
+        public static ConfigEntry<bool> CameraCollision { get; set; }
+        public static ConfigEntry<float> DrawDistance { get; set; }
         public static ConfigEntry<float> XOffset { get; set; }
         public static ConfigEntry<float> XRotationOffset { get; set; }
         public static ConfigEntry<float> YOffset { get; set; }
@@ -61,6 +70,7 @@ namespace CameraAdditions
         public static ConfigEntry<KeyboardShortcut> IncreaseZOffsetShortcut { get; set; }
 
         //Public Variables
+        public bool isGraphicsMenuOpen { get; set; }
         public float maxDistanceLowSpeed { get; private set; }
         public float maxDistanceHighSpeed { get; private set; }
         public float minDistance { get; private set; }
@@ -121,6 +131,11 @@ namespace CameraAdditions
                 new ConfigDescription("Adjust the FOV of Chase Cam mode (Affective only when LOCK FOV is toggled on)",
                     new AcceptableValueRange<int>(0, 180)));
 
+            CameraCollision = Config.Bind("General", "Camera Collision", true, new ConfigDescription("Toggle the camera's collision detection in Chase Camera Mode"));
+
+            DrawDistance = Config.Bind("General", "Draw Distance", 1f, new ConfigDescription("Directly control the Draw Distance value. \nNear = .67 | Medium = 1 | Far = 1.5", 
+                                                                            new AcceptableValueRange<float>(.01f, 7.5f)));
+
             XOffset = Config.Bind<float>("Position Offsets",
                 XOffsetKey,
                 0f,
@@ -153,52 +168,52 @@ namespace CameraAdditions
 
             DefaultsShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 DefaultShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.L, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftControl }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad5),
                 new ConfigDescription("Set the shortcut for setting all values to default"));
 
             EnableRotationShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 EnableRotationShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.U, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftControl }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad0),
                 new ConfigDescription("Set the shortcut toggling if the offset shortcuts affect rotation"));
 
             IncreaseFOVShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 IncreaseFOVShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.P, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftControl }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad9),
                 new ConfigDescription("Set the shortcut for increasing the FOV value"));
 
             DecreaseFOVShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 DecreaseFOVShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.O, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftControl }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad7),
                 new ConfigDescription("Set the shortcut for decreasing the FOV value"));
 
             IncreaseXOffsetShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 IncreaseXShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.L, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftAlt }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad6),
                 new ConfigDescription("Set the shortcut increasing the X Offset"));
 
             DecreaseXOffsetShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 DecreaseXShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.J, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftAlt }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad4),
                 new ConfigDescription("Set the shortcut decreasing the X Offset"));
 
             IncreaseYOffsetShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 IncreaseYShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.I, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftAlt }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad8),
                 new ConfigDescription("Set the shortcut increasing the Y Offset"));
 
             DecreaseYOffsetShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 DecreaseYShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.K, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftAlt }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad2),
                 new ConfigDescription("Set the shortcut decreasing the Y Offset"));
 
             IncreaseZOffsetShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 IncreaseZShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.N, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftControl }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad3),
                 new ConfigDescription("Set the shortcut increasing the Z Offset"));
 
             DecreaseZOffsetShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 DecreaseZShortcutKey,
-                new KeyboardShortcut(UnityEngine.KeyCode.M, new UnityEngine.KeyCode[] { UnityEngine.KeyCode.LeftControl }),
+                new KeyboardShortcut(UnityEngine.KeyCode.Keypad1),
                 new ConfigDescription("Set the shortcut decreasing the Z Offset"));
 
 
@@ -220,6 +235,7 @@ namespace CameraAdditions
             XOffset.SettingChanged += OnConfigChanged;
             YOffset.SettingChanged += OnConfigChanged;
             ZoomOffset.SettingChanged += OnConfigChanged;
+            DrawDistance.SettingChanged += OnConfigChanged;
 
             //Apply Patches
             Logger.LogInfo("Loading...");
@@ -298,6 +314,16 @@ namespace CameraAdditions
             SettingChangedEventArgs settingChangedEventArgs = e as SettingChangedEventArgs;
 
             if (settingChangedEventArgs == null) return;
+
+            if (sender == DrawDistance)
+            {
+                //Log.LogInfo("Setting Changed!");
+                if (G.Sys.OptionsManager_ && G.Sys.OptionsManager_.Graphics_ != null && !isGraphicsMenuOpen)
+                {
+                    //Log.LogInfo("Calling this SetCameraSettings function");
+                    G.Sys.OptionsManager_.Graphics_.SetCameraSettings();
+                }
+            }
         }
 
         //Function should be used before any Chase Camera becomes active

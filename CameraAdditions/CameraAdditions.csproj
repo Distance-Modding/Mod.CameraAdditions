@@ -32,14 +32,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Distance\BepInEx\core\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\AppData\Roaming\r2modmanPlus-local\Distance\profiles\Alt\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\Desktop\publicized_assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Distance\BepInEx\core\BepInEx.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Distance\Distance_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.4.23.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\AppData\Roaming\r2modmanPlus-local\Distance\profiles\Alt\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,7 +65,11 @@
     <Compile Include="Patches\Assembly-CSharp\CarCamera\SetCameraFOV.cs" />
     <Compile Include="Patches\Assembly-CSharp\CarCamera\SetUserSelectedCameraModeIndex.cs" />
     <Compile Include="Patches\Assembly-CSharp\ChaseCamMode\CamModeLateUpdate.cs" />
+    <Compile Include="Patches\Assembly-CSharp\ChaseCamMode\RayCastCamera.cs" />
     <Compile Include="Patches\Assembly-CSharp\CockpitCamMode\CamModeLateUpdate.cs" />
+    <Compile Include="Patches\Assembly-CSharp\GlobalFog\OnPreCull.cs" />
+    <Compile Include="Patches\Assembly-CSharp\GraphicsMenu\IsOpen.cs" />
+    <Compile Include="Patches\Assembly-CSharp\GraphicsSettings\SetCameraImageEffects.cs" />
     <Compile Include="Patches\Assembly-CSharp\MountedCamMode\CamModeLateUpdate.cs" />
     <Compile Include="Patches\Assembly-CSharp\SpectatorFreeCamera\CamModeInitializer.cs" />
     <Compile Include="Patches\Assembly-CSharp\WingsGadget\GadgetUpdateLocal.cs" />
