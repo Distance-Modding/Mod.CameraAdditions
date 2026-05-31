@@ -7,11 +7,12 @@ using System;
 namespace CameraAdditions
 {
     /*Added:
-     * Changed default keybinds to something more sensible
-     * Added an option to toggle Chase Camera's collision
-     * Added a slider to control the Draw Distance directly. Allows you to go much lower and way beyond normal limits
+     * 
+     - Changed default keybinds to something more sensible
+     - Added an option to toggle Chase Camera's collision
+     - Added a slider to control the Draw Distance directly. Allows you to go much lower and way beyond normal limits
+     * 
      */
-    //MAKE A CONFIG FOR DRAW DISTANCE SLIDER. PATCH THE SETCAMERAIMAGEEFFECTS IN GRAPHICSSETTINGS AND ON YOUR CONFIG CHANGE MAKE G.SYS.SETTINGS FIRE SETCAMERASETTINGS KTHXBYE
 
     [BepInPlugin(modGUID, modName, modVersion)]
     public sealed class Mod : BaseUnityPlugin
