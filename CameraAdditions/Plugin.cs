@@ -8,9 +8,13 @@ namespace CameraAdditions
 {
     /*Added:
      * 
-     - Changed default keybinds to something more sensible
-     - Added an option to toggle Chase Camera's collision
-     - Added a slider to control the Draw Distance directly. Allows you to go much lower and way beyond normal limits
+     * Changed default keybinds to something more sensible
+     * Added an option to toggle Chase Camera's collision
+     * Added a slider to control the Draw Distance directly. Allows you to go much lower and way beyond normal limits
+     * 
+     * TODO:
+     * Remove Car input during free cam, also make this a toggleable thing with a hotkey
+     * 
      * 
      */
 
@@ -20,7 +24,7 @@ namespace CameraAdditions
         //Mod Details
         private const string modGUID = "Distance.CameraAdditions";
         private const string modName = "Camera Additions";
-        private const string modVersion = "1.3.0";
+        private const string modVersion = "1.4.0";
 
         //Config Entry Strings
         public static string DecreaseFOVShortcutKey = "The Decrease FOV Shortcut";
@@ -47,6 +51,7 @@ namespace CameraAdditions
 
         //Config Entries
         public static ConfigEntry<bool> EnableFreeCam { get; set; }
+        public static ConfigEntry<bool> LockFreeCam { get; set; }
         public static ConfigEntry<bool> LockCameraPosition { get; set; }
         public static ConfigEntry<bool> LockFOV { get; set; }
         public static ConfigEntry<bool> CameraCollision { get; set; }
@@ -64,6 +69,7 @@ namespace CameraAdditions
         public static ConfigEntry<KeyboardShortcut> DecreaseYOffsetShortcut { get; set; }
         public static ConfigEntry<KeyboardShortcut> DecreaseZOffsetShortcut { get; set; }
         public static ConfigEntry<KeyboardShortcut> DefaultsShortcut { get; set; }
+        public static ConfigEntry<KeyboardShortcut> LockFreeShortcut { get; set; }
         public static ConfigEntry<KeyboardShortcut> EnableRotationShortcut { get; set; }
         public static ConfigEntry<KeyboardShortcut> IncreaseFOVShortcut { get; set; }
         public static ConfigEntry<KeyboardShortcut> IncreaseXOffsetShortcut { get; set; }
@@ -72,6 +78,7 @@ namespace CameraAdditions
 
         //Public Variables
         public bool isGraphicsMenuOpen { get; set; }
+        public bool isFreeCamActive { get; set; } = false;
         public float maxDistanceLowSpeed { get; private set; }
         public float maxDistanceHighSpeed { get; private set; }
         public float minDistance { get; private set; }
@@ -110,6 +117,8 @@ namespace CameraAdditions
                 EnableFreeCamKey,
                 false,
                 new ConfigDescription("Make Free Cam an available camera while playing (Will not apply until outside gameplay)"));
+
+            LockFreeCam = Config.Bind<bool>("General", "Lock Free Cam", false, new ConfigDescription("Locks the position of the free camera when it is active, allowing you to control the car"));
 
             LockCameraPosition = Config.Bind<bool>("General",
                 LockPositionKey,
@@ -171,6 +180,9 @@ namespace CameraAdditions
                 DefaultShortcutKey,
                 new KeyboardShortcut(UnityEngine.KeyCode.Keypad5),
                 new ConfigDescription("Set the shortcut for setting all values to default"));
+
+            LockFreeShortcut = Config.Bind<KeyboardShortcut>("Shortcuts", "Lock Free Cam Shortcut", new KeyboardShortcut(UnityEngine.KeyCode.KeypadEnter),
+                new ConfigDescription("Set the shortcut for toggling the lock for the Free Camera."));
 
             EnableRotationShortcut = Config.Bind<KeyboardShortcut>("Shortcuts",
                 EnableRotationShortcutKey,
@@ -250,6 +262,17 @@ namespace CameraAdditions
             {
                 if (DefaultsShortcut.Value.IsDown())
                     SetDefaults();
+
+                if (LockFreeShortcut.Value.IsDown() && isFreeCamActive)
+                {
+                    LockFreeCam.Value = !LockFreeCam.Value;
+
+                    PlayerDataLocal player = G.Sys.PlayerManager_.GetLocalPlayer(0).playerData_;
+                    if (!LockFreeCam.Value)
+                        player.DisableCarInput();
+                    else
+                        player.EnableCarInput();
+                }
 
                 if (EnableRotationShortcut.Value.IsDown())
                     shortcutsAffectRotation = !shortcutsAffectRotation;

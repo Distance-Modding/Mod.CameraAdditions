@@ -72,6 +72,9 @@
     <Compile Include="Patches\Assembly-CSharp\GraphicsSettings\SetCameraImageEffects.cs" />
     <Compile Include="Patches\Assembly-CSharp\MountedCamMode\CamModeLateUpdate.cs" />
     <Compile Include="Patches\Assembly-CSharp\SpectatorFreeCamera\CamModeInitializer.cs" />
+    <Compile Include="Patches\Assembly-CSharp\SpectatorFreeCamera\CamModeLateUpdate.cs" />
+    <Compile Include="Patches\Assembly-CSharp\SpectatorFreeCamera\CamModeOnGainFocus.cs" />
+    <Compile Include="Patches\Assembly-CSharp\SpectatorFreeCamera\CamModeOnLoseFocus.cs" />
     <Compile Include="Patches\Assembly-CSharp\WingsGadget\GadgetUpdateLocal.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
