@@ -10,8 +10,11 @@ namespace CameraAdditions.Patches
         [HarmonyPostfix]
         internal static void ControlLock(SpectatorFreeCamera __instance)
         {
-            if (!__instance.parent_.PlayerDataOwner_.carInputEnabled_ && !G.Sys.GameManager_.PauseMenuOpen_)
-                __instance.parent_.PlayerDataOwner_.EnableCarInput();
+            PlayerDataLocal player = __instance.parent_.PlayerDataOwner_; 
+
+            if (player != null)
+                if (!player.carInputEnabled_ && !G.Sys.GameManager_.PauseMenuOpen_)
+                    player.EnableCarInput();
 
             Mod.Instance.isFreeCamActive = false;
         }

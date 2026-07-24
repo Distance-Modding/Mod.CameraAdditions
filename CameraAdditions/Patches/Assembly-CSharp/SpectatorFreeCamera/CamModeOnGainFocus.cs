@@ -12,8 +12,11 @@ namespace CameraAdditions.Patches
         {
             Mod.Instance.isFreeCamActive = true;
 
-            if (!Mod.LockFreeCam.Value)
-                __instance.parent_.PlayerDataOwner_.DisableCarInput();
+            PlayerDataLocal player = __instance.parent_.PlayerDataOwner_;
+
+            if (player != null)
+                if (!player.Finished_ && !Mod.LockFreeCam.Value)
+                    player.DisableCarInput();
         }
     }
 }

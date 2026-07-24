@@ -8,9 +8,10 @@ namespace CameraAdditions
 {
     /*Added:
      * 
-     * Changed default keybinds to something more sensible
-     * Added an option to toggle Chase Camera's collision
-     * Added a slider to control the Draw Distance directly. Allows you to go much lower and way beyond normal limits
+- By default, you cannot control the car while free camera is active
+- Added a toggle control whether the free camera is locked
+- When the free camera is locked, the car can now be controlled
+- Added a hotkey to control locking the free camera. By default it's KeypadEnter
      * 
      * TODO:
      * Remove Car input during free cam, also make this a toggleable thing with a hotkey
