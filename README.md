@@ -8,6 +8,7 @@ What this adds:
 - Directly control the draw distance of every camera
 - Zoom in and out with an input or number entry
 - Enable the free camera during gameplay. (This means it gets added to the selectable cameras during gameplay like the cockpit and hood cameras)
+- Lock the position of the free camera during gameplay
 - Offset the position all Car Cameras with a number entry or input
 - Offset the rotation of all Car Cameras with a number entry or input
 
