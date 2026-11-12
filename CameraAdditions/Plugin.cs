@@ -8,13 +8,8 @@ namespace CameraAdditions
 {
     /*Added:
      * 
-- By default, you cannot control the car while free camera is active
-- Added a toggle control whether the free camera is locked
-- When the free camera is locked, the car can now be controlled
-- Added a hotkey to control locking the free camera. By default it's KeypadEnter
      * 
      * TODO:
-     * Remove Car input during free cam, also make this a toggleable thing with a hotkey
      * 
      * 
      */
@@ -25,7 +20,7 @@ namespace CameraAdditions
         //Mod Details
         private const string modGUID = "Distance.CameraAdditions";
         private const string modName = "Camera Additions";
-        private const string modVersion = "1.4.0";
+        private const string modVersion = "1.4.2";
 
         //Config Entry Strings
         public static string DecreaseFOVShortcutKey = "The Decrease FOV Shortcut";

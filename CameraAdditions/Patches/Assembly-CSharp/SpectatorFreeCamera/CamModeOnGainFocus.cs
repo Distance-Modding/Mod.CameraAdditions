@@ -14,8 +14,8 @@ namespace CameraAdditions.Patches
 
             PlayerDataLocal player = __instance.parent_.PlayerDataOwner_;
 
-            if (player != null)
-                if (!player.Finished_ && !Mod.LockFreeCam.Value)
+            if (player != null && Timex.isSet_)
+                if (!player.Finished_ && Timex.ModeTime_ > 0 && !Mod.LockFreeCam.Value)
                     player.DisableCarInput();
         }
     }
